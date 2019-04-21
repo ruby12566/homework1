@@ -1,0 +1,9 @@
+"0","major <- c(""經濟系"",""法律系"",""社會系"",""經濟系"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","grade <- c(50,60,92,88)"

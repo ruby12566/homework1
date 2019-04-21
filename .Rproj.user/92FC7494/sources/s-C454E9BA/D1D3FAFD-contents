@@ -3,8 +3,8 @@ title: "homework 1"
 date: "2019-04-01"
 output: html_document
 params:
-  studentID: "410473044"
-  studentName: "陳亭妤"
+  studentID: "410473008"
+  studentName: "邱品傑"
 ---
 
 # 注意事項
@@ -64,6 +64,9 @@ sumEcon
 ### 1.3
 善用logical class遇到數學計算會形成1與0的數值之特質，計算經濟系學生在該科的平均成績（即經濟系學生在該科成績加總除以經濟系學生數），存成答案物件meanEcon。
 ```{r ans13}
+fromEcon <- str_detect(major,"經濟系")
+grade <- c(50,60,92,88)
+sumEcon <- sum(fromEcon)
 meanEcon <- sum(fromEcon*grade/sumEcon)
 meanEcon
 ```
@@ -76,6 +79,7 @@ library(readr)
 podcastcompetition3 <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/podcastcompetition3.csv")
 submitTime <- podcastcompetition3$Timestamp
 head(submitTime)
+class(submitTime)
 ```
 
 ### 2.1
@@ -97,12 +101,11 @@ twTime
 
 ### 2.3
 使用`hour(twTime)`取出twTime的小時值。創造出一個logical class答案物件nightOwl，為TRUE若twTime中的投票時間在半夜1點到早上6點間（包含1與6。
-
 ```{r ans23}
-vote <- hour(twTime)
+votetime <- hour(twTime)
 hour(twTime)
-nightowl1 <- c(vote<=6)
-nightowl2 <- c(vote>=1)
+nightowl1 <- c(votetime<=6)
+nightowl2 <- c(votetime>=1)
 nightowl <- c(nightowl1&nightowl2)
 class(nightowl)
 nightowl
@@ -134,21 +137,52 @@ studentID, schoolYear, grade, credit的每一個元素位置其值分別代表�
 對每一科，只有及格才表示有拿到學分，請創造一個integer class物件名為earnedCredit, 其值為0若沒拿到該科學分，其值為對應credit位置的學分數若有拿到該科學分。
 （舉例： 若credit為c(2,3,2), 而對應grade為c(55,70,88), 則earnedCredit為c(0,3,2)）此題答案物件為earnedCredit （注意class也要對）
 ```{r ans31}
+qualifiedgrade <- c(grade>=60) #向量，只有大於等於60的成績為true，其他為false
+qualifiedgrade
+earnedCredit1 <- credit*qualifiedgrade #在向量運算中，true=1，false=0。因此將學分數乘以qualifiedgrade(是否大於等於60的向量)
+#例如qualifiedgrade=(t,f,t,t,f...)，credit=(2,2,3,2,1,...)。相乘等於=(2,0,3,3,0,...)
+earnedCredit <- as.integer(earnedCredit1)
+class(earnedCredit)
+earnedCredit
 ```
 
 ### 3.2
 請問學號為046S6f645的學生在100學年修習了多少學分? 答案請存在答案物件credit100ChosenStudent。
 ```{r ans32}
+qstudentID <- str_detect(studentID,"046S6f645")
+qschoolYear <- str_detect(schoolYear,"100")
+#str_detect運算出來為向量，可以檢測出是否含有某特定文字(值)，若有則為true，反之則false。
+q100ChosenStudent <- qstudentID & qschoolYear
+#將上述兩向量做交集，假設qstudentID=(t,f,t,t,...)，qschoolYear=(t,f,f,t,...)，則交集結會等於(t,f,f,t...)
+credit100ChosenStudent <- sum(credit*q100ChosenStudent)
+#將學分數，乘以上述符合兩條件交集的向量運算結果(credit*q100ChosenStudent。t=1，f=0)，可能等於(2,0,0,3,...)。並用sum()將學分數做總和。
+credit100ChosenStudent
 ```
 
 ### 3.3
 請問學號為046S6f645的學生在100學年實得了多少學分？答案請存在物件earnedCredit100ChosenStudent。
 ```{r ans33}
+qstudentID <- str_detect(studentID,"046S6f645")
+qschoolYear <- str_detect(schoolYear,"100")
+qgrade <- c(grade>=60)
+#跟3.2相比多了一個成績大於等於60的向量(類似3.1)
+q100ChosenGradeStudent <- qstudentID & qschoolYear & qgrade
+earnedCredit100ChosenStudent <- sum(credit*q100ChosenGradeStudent)
+earnedCredit100ChosenStudent
 ```
 
 ### 3.4
 請問學號為046S6f645的學生在100學年的學年平均成績為多少？（存在答案物件gpa100ChosenStudent）(即為該生該學年所有**學分數大於0**的各科學期成績**分別乘上各科學分數**加總後，除以其該學年總學分數) (hint: 建議先創一個可以代表元素是否來自**該學號**，且**100學年**，且**學分數>0**的logical class物件，用它來選出所要的成績或學分進行必要相乘或加總)
 ```{r ans34}
+qstudentID <- str_detect(studentID,"046S6f645")
+qschoolYear <- str_detect(schoolYear,"100")
+q100ChosenStudent <- qstudentID & qschoolYear
+#同時符合學號和學年的課程資料，例如(f,f,,t,t,t,t,t,f,....)
+credit100ChosenStudent <- credit*q100ChosenStudent
+#學分數(2,3,2,1,2,3,0,1,...)乘以同時符合學號和學年的課程資(f,f,,t,t,t,t,t,f,....)料，可以得到(0,0,2,1,2,3,0,0,...)。
+gpa100ChosenStudent <- sum(grade*credit100ChosenStudent)/sum(credit100ChosenStudent)
+#把credit100ChosenStudent乘上成績進行加權並用sum()加總，最後除以符合條件的總學分數(也是運用sum())。
+gpa100ChosenStudent
 ```
 
 > 答案後，請確認每個code chunk的最後一行皆為該題的答案物件。

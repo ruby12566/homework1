@@ -1,0 +1,18 @@
+"0","qstudentID <- str_detect(studentID,""046S6f645"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","qschoolYear <- str_detect(schoolYear,""100"")"
+"0","qgrade <- c(grade>=60)"
+"0","#跟3.2相比多了一個成績大於等於60的向量(類似3.1)"
+"0","q100ChosenGradeStudent <- qstudentID & qschoolYear & qgrade"
+"0","earnedCredit100ChosenStudent <- sum(credit*q100ChosenGradeStudent)"
+"0","earnedCredit100ChosenStudent"
+"1","[1]"
+"1"," 35"
+"1","
+"

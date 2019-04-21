@@ -1,0 +1,25 @@
+"0","library(readr)"
+"0","podcastcompetition3 <- read_csv(""https://raw.githubusercontent.com/tpemartin/github-data/master/podcastcompetition3.csv"")"
+"2","`curl` package not installed, falling back to using `url()`
+"
+"2","Parsed with column specification:
+cols(
+  Timestamp = [31mcol_character()[39m,
+  `¥X¥Í¦è¤¸¦~¤ë¤é¡]ÅçÃÒ¥»¤H¥Î¡^` = [31mcol_character()[39m,
+  ½Ð¿ï¾Ü§A³Ì³ßÅwªº¼v¤ù¤G³¡ = [31mcol_character()[39m
+)
+"
+"0","submitTime <- podcastcompetition3$Timestamp"
+"0","head(submitTime)"
+"1","[1]"
+"1"," ""12/28/2017 10:28:58"""
+"1"," ""12/28/2017 10:29:59"""
+"1"," ""12/28/2017 10:32:37"""
+"1","
+"
+"1","[4]"
+"1"," ""12/28/2017 10:35:54"""
+"1"," ""12/28/2017 10:36:39"""
+"1"," ""12/28/2017 10:38:42"""
+"1","
+"

@@ -1,0 +1,27 @@
+"0","library(readr)"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","transcriptDataFinal <- read_csv(""https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv"")"
+"2","`curl` package not installed, falling back to using `url()`
+"
+"2","Parsed with column specification:
+cols(
+  ¾Ç¸¹ = [31mcol_character()[39m,
+  ¾Ç©¡ = [32mcol_double()[39m,
+  ¾Ç¨t = [31mcol_character()[39m,
+  ¾Ç¦~ = [32mcol_double()[39m,
+  ¾Ç´Á = [32mcol_double()[39m,
+  ¾Ç´Á¦¨ÁZ = [32mcol_double()[39m,
+  ¾Ç¤À¼Æ = [32mcol_double()[39m,
+  `¥²¿ï­×Ãþ§O¡]¥²¢A¿ï¢A³q¡^` = [31mcol_character()[39m
+)
+"
+"0","studentID <- transcriptDataFinal$å­¸è™Ÿ"
+"0","schoolYear <- transcriptDataFinal$å­¸å¹´"
+"0","grade <- transcriptDataFinal$å­¸æœŸæˆç¸¾"
+"0","credit <- transcriptDataFinal$å­¸åˆ†æ•¸"

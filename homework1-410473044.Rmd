@@ -134,21 +134,44 @@ studentID, schoolYear, grade, credit的每一個元素位置其值分別代表�
 對每一科，只有及格才表示有拿到學分，請創造一個integer class物件名為earnedCredit, 其值為0若沒拿到該科學分，其值為對應credit位置的學分數若有拿到該科學分。
 （舉例： 若credit為c(2,3,2), 而對應grade為c(55,70,88), 則earnedCredit為c(0,3,2)）此題答案物件為earnedCredit （注意class也要對）
 ```{r ans31}
+let <- c(grade>=60) 
+let
+earnedCredit1 <- credit*let
+earnedCredit <- as.integer(earnedCredit1)
+class(earnedCredit)
+earnedCredit
 ```
 
 ### 3.2
 請問學號為046S6f645的學生在100學年修習了多少學分? 答案請存在答案物件credit100ChosenStudent。
 ```{r ans32}
+studentID1 <- str_detect(studentID,"046S6f645")
+schoolYear1 <- str_detect(schoolYear,"100")
+ChosenStudent <- studentID1 & schoolYear1
+credit100ChosenStudent <- sum(credit*ChosenStudent)
+credit100ChosenStudent
 ```
 
 ### 3.3
 請問學號為046S6f645的學生在100學年實得了多少學分？答案請存在物件earnedCredit100ChosenStudent。
 ```{r ans33}
+studentID1 <- str_detect(studentID,"046S6f645")
+schoolYear1 <- str_detect(schoolYear,"100")
+grade1 <- c(grade>=60)
+ChosenGradeStudent <- studentID1 & schoolYear1 & grade1
+earnedCredit100ChosenStudent <- sum(credit*ChosenGradeStudent)
+earnedCredit100ChosenStudent
 ```
 
 ### 3.4
 請問學號為046S6f645的學生在100學年的學年平均成績為多少？（存在答案物件gpa100ChosenStudent）(即為該生該學年所有**學分數大於0**的各科學期成績**分別乘上各科學分數**加總後，除以其該學年總學分數) (hint: 建議先創一個可以代表元素是否來自**該學號**，且**100學年**，且**學分數>0**的logical class物件，用它來選出所要的成績或學分進行必要相乘或加總)
 ```{r ans34}
+studentID1 <- str_detect(studentID,"046S6f645")
+schoolYear1 <- str_detect(schoolYear,"100")
+ChosenStudent <- studentID1 & schoolYear1
+credit100ChosenStudent <- credit*ChosenStudent
+gpa100ChosenStudent <- sum(grade*credit100ChosenStudent)/sum(credit100ChosenStudent)
+gpa100ChosenStudent
 ```
 
 > 答案後，請確認每個code chunk的最後一行皆為該題的答案物件。
