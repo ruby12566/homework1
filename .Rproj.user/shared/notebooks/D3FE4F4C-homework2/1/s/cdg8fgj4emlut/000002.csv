@@ -1,0 +1,12 @@
+"0","library(jsonlite)"
+"2","
+Attaching package: ．jsonlite・
+
+"
+"2","The following object is masked from ．package:purrr・:
+
+    flatten
+
+"
+"0","commitCheck <- content(GET(""https://raw.githubusercontent.com/tpemartin/github-data/master/rstudioCommits.json""))"
+"0","commitCheck <- fromJSON(commitCheck, simplifyVector = F)"

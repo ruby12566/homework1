@@ -1,0 +1,3 @@
+"0","library(jsonlite)"
+"0","commitCheck <- content(GET(""https://raw.githubusercontent.com/tpemartin/github-data/master/rstudioCommits.json""))"
+"0","commitCheck <- fromJSON(commitCheck, simplifyVector = F)"

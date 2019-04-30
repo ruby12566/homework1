@@ -1,0 +1,234 @@
+---
+title: "homework2"
+date: "2019-04-19"
+output: html_document
+params:
+  studentID: "410473008"
+  studentName: "邱品傑"
+---
+
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 存檔時，請用你的學號當延伸檔名。學號為41078392，則請存成homework1-41078392.Rmd。(記得使用：save with enconding, 然後選utf-8)
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+  
+> 每次作業滿分10分：收到Google行事曆邀請按Yes(接受)得2分，有寫作業於期限內上傳得3分，依作業準確率決定最後5分得分多寡。
+
+> 前述存檔utf-8格式要求與frontmatter要求缺任何一個則扣1分。
+
+> !!! 不使用作業檔作答（例如：作業1有同學拿自己上課練習檔在後面接上作業檔內容；也有同學用new file產生rmd檔懶得刪除新檔案原有文字而在後面亂貼作業檔內容），其答案全部都會算錯（影響改題程式判讀）。
+
+> !!! 「有寫作業於期限內上傳得3分」指得是上傳自己寫的作業檔，上傳空白作業檔或其他不相關檔案用來騙取3分是不可取的行為，抓到該次作業算0分，抓到2次則整學期作業均為0分。
+
+# 題目
+
+請先執以下code chunk, 引入所需packages. 
+```{r}
+library(lubridate); library(stringr); library(dplyr)
+```
+
+## 作答需知
+
+  * 每一題會有設好的ans chunk，它會有ansxx標籤（如下的ans99），請將你的程式寫在裡面。每一題都需要你把答案存在指定的物件，並在「**最後一行**」打物件名稱。以下例，若答案是`2+3`並要你存在答案物件test裡，那你的程式如下：
+```{r}
+test <- 2+3 # 答案存在指定test物件
+test # 最後一行打指定物件名稱
+```
+
+  * 同學可按上方有毛線球圖示的knit鍵，產生完整題目文件方便閱讀。
+  
+  * fronmatter裡的studentID及studentName任何一個沒填寫會扣作業分數1分。
+  
+## 1
+
+### 1.1 更改物件元素名稱
+使用`names()`可以顯示物件內元素名稱，而`names() <- `則可以用來改變元素名稱，例如：
+```{r}
+obj11 <- c(
+  小明=55,
+  小新=88,
+  Eric=73
+)
+names(obj11) # 螢幕顯示 "小明" "小新" "Eric"
+```
+
+```{r}
+names(obj11) <- c("Ming","Shawn","Eric") # <- 號右側是character vector, 其長度要和names(obj11)相同。
+names(obj11) # 螢幕顯示 "Ming"  "Shawn" "Eric" 
+```
+
+如果只要改**部份**`names(obj11)`，只需要對它進行objection extraction，例如： 
+```{r}
+names(obj11)[c(1,2)] <- c("M","S") # 只改第1，2元素名稱
+names(obj11) # 螢幕顯示 "M"    "S"    "Eric"
+```
+
+請執行以下程式取得studentRecord物件：
+```{r data11}
+studentRecord <-
+  list(
+    學號="410073058",
+    姓名="王小明",
+    性別="男",
+    學年平均成績=list(
+      一年級=88,
+      二年級=90.3,
+      三年級=92,
+      四年級=95
+    )
+  )
+```
+
+請將元素名稱「學年平均成績」改成「平均成績」。（此題最後一行請輸入studentRecord，老師改題時會看studentRecord的names有沒有正確更改。）
+```{r ans11}
+names(studentRecord)[[4]] <- "平均成績"
+studentRecord
+```
+
+### 1.2
+請將"一年級"，"二年級"，"三年級"，"四年級"改成"一"，"二"，"三"，"四"。（hint: 改掉studentRecord[[4]]的元素名稱。）（此題最後一行請輸入studentRecord，老師改題時會看studentRecord的names有沒有正確更改。）
+```{r ans12}
+names(studentRecord[[4]]) <- c("一","二","三","四")
+studentRecord
+```
+
+
+## 2
+執行以下程式取得rstudio/rstudio這個repo的最近30次commits，內容存在commitCheck物件的30個對應元素。（必需安裝**httr**套件）
+```{r}
+library(httr)
+commitCheck <- content(GET("https://api.github.com/repos/rstudio/rstudio/commits"))
+```
+
+如果上述API請求被拒絕，請安裝**jsonlite**套件，並改執行以下程式引入commitCheck，如果API請求正常則無需理會這段程序:
+```{r data2}
+library(jsonlite)
+commitCheck <- content(GET("https://raw.githubusercontent.com/tpemartin/github-data/master/rstudioCommits.json"))
+commitCheck <- fromJSON(commitCheck, simplifyVector = F)
+```
+
+```{r ans1prepare, eval=FALSE}
+```
+
+### 2.1
+請取出commitCheck第8個元素底下的**commit**元素，再拿出它底下的**committer**元素，再拿出它底下的**date**元素的第一個值，存成commit8Date答案物件（為character class) 。（最後一行最忘了打答案物件）
+```{r ans21}
+commit8Date <- commitCheck[[8]][[3]][[2]][[3]][[1]]
+class(commit8Date)
+commit8Date
+```
+
+
+### 2.2
+commit8Date的日期時間為UTC時間，請將它轉成台灣時間的date time class並存在答案物件commit8TWDate。（最後一行最忘了打答案物件）
+```{r ans22}
+commit8Date <- ymd_hms(commit8Date)
+Sys.timezone()
+commit8TWDate <- with_tz(commit8Date,tzone="Asia/Taipei")
+commit8TWDate
+```
+
+### 2.3
+原本commitCheck裡的元素沒有命名（`names(commitCheck)`會顯示NULL），請將這些元素依其位置順序命名為"commit1","commit2", "commit3"等等。此題最後一行請輸入commitCheck，老師改題時會看commitCheck的names有沒有正確更改。）(hint: `c(1:5)`可創出c(1,2,3,4,5); `length(commitCheck)`會給你commitCheck元素個數)
+```{r ans23}
+length(commitCheck)
+number<-c(1:30)
+names(commitCheck)<- str_c("commit",number)
+names(commitCheck)
+commitCheck
+```
+
+### 2.4
+請先安裝**purrr**套件，接著執行以下程式得到allCommitDatesList這個物件，裡頭每個元素都是每一次commit的日期時間。
+```{r data14}
+library(purrr)
+map(commitCheck,~.[[3]][[2]][[3]][[1]]) -> allCommitDatesList
+```
+
+allCommitDatesList是個list，請使用`unlist()`函數將它轉成一個atomic vector其class為character，並存在allCommitDates答案物件。（最後一行最忘了打答案物件）
+```{r ans24}
+allCommitDates<-unlist(allCommitDatesList)
+allCommitDates
+```
+
+### 2.5 
+allCommitDates是UTC時區的時間文字字串，請將它轉成date time格式，再改成台灣時區後，存在allCommitDatesTW答案物件。（最後一行最忘了打答案物件）
+```{r ans25}
+allCommitDates <- ymd_hms(allCommitDates)
+Sys.timezone()
+allCommitDatesTW <- with_tz(allCommitDates,tzone="Asia/Taipei")
+allCommitDatesTW
+```
+
+### 2.6
+使用`hour()`及`minute()`可分別將date time元素的「小時」及「分鐘」取出（其中小時是24小時制）。請創立一個logical vector答案物件logicWithinTimeFrame，各個元素值為TRUE時代表allCommitDatesTW的時間落在凌晨4點30到凌晨6點30之間（含起迄時點）。（最後一行最忘了打答案物件）
+```{r ans26}
+morning<-str_c(hour(allCommitDatesTW),"點",minute(allCommitDatesTW),"分")
+morningtime<-hm(morning)
+up<-hm("04:30")
+down<-hm("06:30")
+logicWithinTimeFrame<- c(up<=morningtime & morningtime<=down)
+logicWithinTimeFrame
+```
+
+## 3
+
+執行以下程式引入學生成績單資料物件transcriptData:
+```{r data3, message=F}
+library(readr)
+transcriptData <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
+```
+transcriptData的class是data frame（用`class(transcriptData)`可得知），但R對它的基礎認知其實是list（用`typeof(transcriptData)`可得知），所以我們所學對list物件的操作在這裡也行得通。
+
+### 3.1
+請查詢transcriptData元素名稱，並將它們存在名為variableNames的character vector答案物件裡。（最後一行最忘了打答案物件）
+```{r ans31}
+variableNames<-names(transcriptData)
+g<-rownames(transcriptData)
+variableNames
+```
+
+### 3.2
+variableNames裡每個值是這資料有的欄位名稱，我們常稱之為**變數名稱**。請創造一個logic vector名為logicFromEcon的答案物件，其各別元素值為TRUE當「學系」變數裡的對應元素值為"經濟學系"。（最後一行最忘了打答案物件）
+
+```{r ans32}
+as.data.frame(transcriptData,stringsAsFactors=F) -> transcriptData
+logicFromEcon <- str_detect(transcriptData[,3],"經濟學系")
+logicFromEcon
+```
+
+### 3.3
+請由transcriptData中選出"學號","學分數","必選修類別（必∕選∕通）"變數（使用`[.]` extraction）並存成transcriptPartialData答案物件。（最後一行最忘了打答案物件）
+
+```{r ans33}
+transcriptPartialData<-transcriptData[,c(1,7,8)]
+transcriptPartialData
+```
+
+### 3.4
+創立一個新的list答案物件叫transcriptPartialDataEcon，裡頭有"學號","學分數","必選修類別（必∕選∕通）"三個元素名稱，各別元素內容來自transcirptPartialData中所對應的變數名稱，**但只保留來自經濟學系**學生的資料（我們稱transcriptPartialDataEcon為transcriptData的子樣本）。 (hint: 活用3.2題結果) （最後一行最忘了打答案物件）
+
+> 這題會使用到name=value將賦予元素名稱，若name有特別字元時，我們可換成"name"=value的形式書寫，如： x <- list(z=c(1,2),"this is special"=c(T,F,T,T,F))
+
+```{r ans34}
+#方法一
+transcriptPartialDataEcon<-list(學號=transcriptData[logicFromEcon,1],
+                                學分數=transcriptData[logicFromEcon,7],
+                                 "必選修類別（必/選/通）"=transcriptData[logicFromEcon,8])
+transcriptPartialDataEcon
+
+#方法二
+transcriptPartialDataEconframe<-transcriptData[logicFromEcon,c(1,7,8)]
+transcriptPartialDataEcon<-as.list(transcriptPartialDataEconframe)
+transcriptPartialDataEcon
+```
+
+
+> 答完後上傳前，請確認每個code chunk的最後一行皆為該題的答案物件（除非題目有另外規定），且frontmatter的studentID及studentName皆有填寫。
+
+> 注意： 沒有存檔成utf-8格式或frontmatter資訊沒填寫會扣1分。

@@ -1,0 +1,15 @@
+"0","names(obj11)[c(1,2)] <- c(""M"",""S"") # 只改第1，2元素名稱"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","names(obj11) # 螢幕顯示 ""M""    ""S""    ""Eric"""
+"1","[1]"
+"1"," ""M""   "
+"1"," ""S""   "
+"1"," ""Eric"""
+"1","
+"

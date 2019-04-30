@@ -1,0 +1,15 @@
+"0","names(obj11) <- c(""Ming"",""Shawn"",""Eric"") # <- 號右側是character vector, 其長度要和names(obj11)相同。"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","names(obj11) # 螢幕顯示 ""Ming""  ""Shawn"" ""Eric"" "
+"1","[1]"
+"1"," ""Ming"" "
+"1"," ""Shawn"""
+"1"," ""Eric"" "
+"1","
+"

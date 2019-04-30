@@ -1,0 +1,15 @@
+"0","library(readr)"
+"2","package ¡¥readr¡¦ was built under R version 3.5.3"
+"0","transcriptData <- read_csv(""https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv"")"
+"2","Parsed with column specification:
+cols(
+  ¾Ç¸¹ = [31mcol_character()[39m,
+  ¾Ç©¡ = [32mcol_double()[39m,
+  ¾Ç¨t = [31mcol_character()[39m,
+  ¾Ç¦~ = [32mcol_double()[39m,
+  ¾Ç´Á = [32mcol_double()[39m,
+  ¾Ç´Á¦¨ÁZ = [32mcol_double()[39m,
+  ¾Ç¤À¼Æ = [32mcol_double()[39m,
+  `¥²¿ï­×Ãþ§O¡]¥²¢A¿ï¢A³q¡^` = [31mcol_character()[39m
+)
+"
